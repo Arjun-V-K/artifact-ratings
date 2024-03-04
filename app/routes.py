@@ -10,8 +10,19 @@ def index():
 
 @main_bp.route('/add_artifact', methods=['POST'])
 def add_artifact():
-    set_name = request.form.get('set_name')
-    new_artifact = Artifact(set_name=set_name)
+    set_key = request.form.get('set_key')
+    slot_key = request.form.get('slot_key')
+    rarity = request.form.get('rarity')
+    main_stat_key = request.form.get('main_stat_key')
+    level = request.form.get('level')
+
+    new_artifact = Artifact(
+        setKey=set_key, 
+        slotKey=slot_key,
+        rarity=rarity,
+        mainStatKey=main_stat_key,
+        level=level
+    )
     db.session.add(new_artifact)
     db.session.commit()
     return redirect(url_for('main.index'))
