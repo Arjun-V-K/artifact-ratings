@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Artifact List</title>
+</head>
+<body>
+    <h1>Artifact List</h1>
+    <form method="POST" action="{{ url_for('main.add_artifact') }}">
+        <input type="text" name="set_name" required>
+        <button type="submit">Add Artifact</button>
+    </form>
+    <ul>
+        {% for artifact in artifacts %}
+            <li>
+                {{ artifact.set_name }}
+                <form method="POST" action="{{ url_for('main.delete_artifact', artifact_id=artifact.id) }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
