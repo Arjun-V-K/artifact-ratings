@@ -1,6 +1,10 @@
 from app import db
 
 """
+slotKey : "flower", "plume", "sands", "goblet", "circlet" 
+mainStatKey : "hp", "atk", def, eleMas, def_, atk_, hp_, enerRech_, anemo_dmg_, cryo_dmg_, hydro_dmg_, pyro_dmg_, electro_dmg_, dendro_dmg_, geo_dmg_, critRate_, critDMG_, heal_
+subStatKey : "hp", "atk", def, eleMas, def_, atk_, hp_, enerRech_, critRate_, critDMG_
+
 Example data
     {
       "setKey": "ThunderingFury",
@@ -95,6 +99,11 @@ class Artifact(db.Model):
     rarity = db.Column(db.Integer)
     mainStatKey = db.Column(db.String(50), nullable=False)
     level = db.Column(db.Integer)
-
-    # TODO: Substats
-    
+    subStatKey1 = db.Column(db.String(50), nullable=True)
+    subStatValue1 = db.Column(db.Float, nullable=True)
+    subStatKey2 = db.Column(db.String(50), nullable=True)
+    subStatValue2 = db.Column(db.Float, nullable=True)
+    subStatKey3 = db.Column(db.String(50), nullable=True)
+    subStatValue3 = db.Column(db.Float, nullable=True)
+    subStatKey4 = db.Column(db.String(50), nullable=True)
+    subStatValue4 = db.Column(db.Float, nullable=True)

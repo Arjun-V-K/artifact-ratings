@@ -1,12 +1,28 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Artifact, db
 
+import json
+
 main_bp = Blueprint('main', __name__)
 
+# @main_bp.route('/')
+# def index():
+#     artifacts = Artifact.query.all()
+#     return render_template('index.html', artifacts=artifacts)
+
 @main_bp.route('/')
-def index():
+def welcome():
+    return render_template('welcome.html')
+
+@main_bp.route('/view_artifacts')
+def view_artifacts():
     artifacts = Artifact.query.all()
-    return render_template('index.html', artifacts=artifacts)
+    return render_template('view_artifacts.html', artifacts=artifacts)
+
+@main_bp.route('/add_artifact_page')
+def add_artifact_page():
+    return render_template('add_artifacts.html')
+
 
 @main_bp.route('/add_artifact', methods=['POST'])
 def add_artifact():
@@ -25,11 +41,56 @@ def add_artifact():
     )
     db.session.add(new_artifact)
     db.session.commit()
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.view_artifacts'))
+
+@main_bp.route('/add_artifact_json', methods=['POST'])
+def add_artifact_json():
+    if 'json_file' in request.files and request.files['json_file'].filename:
+        json_file = request.files['json_file']
+        data = json.load(json_file)
+    else:
+        data = json.loads(request.form['json_data'])
+    
+    # print(f"Received Data: {data} : {type(data)}")
+    for artifact in data.get('artifacts'):
+        # print(f"\n{artifact} : {type(artifact)}")
+        setKey = artifact.get('setKey')
+        slotKey = artifact.get('slotKey')
+        rarity = artifact.get('rarity')
+        mainStatKey = artifact.get('mainStatKey')
+        level = artifact.get('level')
+
+        substats = artifact.get('substats', [])
+        subStatKeys = []
+        subStatValues = []
+        for i in range(4):
+            substat = substats[i] if i < len(substats) else None 
+            subStatKeys.append(substat.get('key') if substat else None)
+            subStatValues.append(substat.get('value') if substat else None)
+        
+        new_artifact = Artifact(
+            setKey=setKey, 
+            slotKey=slotKey,
+            rarity=rarity,
+            mainStatKey=mainStatKey,
+            level=level,
+            subStatKey1 = subStatKeys[0],
+            subStatKey2 = subStatKeys[1],
+            subStatKey3 = subStatKeys[2],
+            subStatKey4 = subStatKeys[3],
+            subStatValue1 = subStatValues[0],
+            subStatValue2 = subStatValues[1],
+            subStatValue3 = subStatValues[2],
+            subStatValue4 = subStatValues[3]
+        )
+        db.session.add(new_artifact)
+    db.session.commit()
+    return redirect(url_for('main.view_artifacts'))
+
 
 @main_bp.route('/delete_artifact/<int:artifact_id>', methods=['POST'])
 def delete_artifact(artifact_id):
     artifact_to_delete = Artifact.query.get(artifact_id)
     db.session.delete(artifact_to_delete)
     db.session.commit()
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.view_artifacts'))

@@ -1,0 +1,81 @@
+{
+    "artifacts": [
+        {
+            "rarity": 5,
+            "level": 20,
+            "mainStatKey": "hp",
+            "slotKey": "flower",
+            "setKey": "DeepwoodMemories",
+            "substats": [
+                {
+                    "key": "eleMas",
+                    "value": 56
+                },
+                {
+                    "key": "critRate_",
+                    "value": 7.4
+                },
+                {
+                    "key": "critDMG_",
+                    "value": 14
+                }
+            ],
+            "location": "Nahida",
+            "lock": false
+        },
+        {
+            "rarity": 5,
+            "level": 20,
+            "mainStatKey": "atk",
+            "slotKey": "plume",
+            "setKey": "DeepwoodMemories",
+            "substats": [
+                {
+                    "key": "hp_",
+                    "value": 4.7
+                },
+                {
+                    "key": "hp",
+                    "value": 508
+                },
+                {
+                    "key": "eleMas",
+                    "value": 91
+                },
+                {
+                    "key": "critRate_",
+                    "value": 6.2
+                }
+            ],
+            "location": "Nahida",
+            "lock": false
+        },
+        {
+            "rarity": 5,
+            "level": 20,
+            "mainStatKey": "critRate_",
+            "slotKey": "circlet",
+            "setKey": "DeepwoodMemories",
+            "substats": [
+                {
+                    "key": "def",
+                    "value": 42
+                },
+                {
+                    "key": "critDMG_",
+                    "value": 21
+                },
+                {
+                    "key": "atk_",
+                    "value": 4.7
+                },
+                {
+                    "key": "enerRech_",
+                    "value": 13
+                }
+            ],
+            "location": "",
+            "lock": false
+        }
+    ]
+}

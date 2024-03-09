@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}View Artifacts{% endblock %}
+
+{% block content %}
+    <h2>View Artifacts</h2>
+    {% if artifacts %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Set</th>
+                <th>Slot</th>
+                <th>Rarity</th>
+                <th>Main Stat</th>
+                <th>Level</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for artifact in artifacts %}
+                <tr>
+                    <td>{{ artifact.id }}</td>
+                    <td>{{ artifact.setKey }}</td>
+                    <td>{{ artifact.slotKey }}</td>
+                    <td>{{ artifact.rarity }}</td>
+                    <td>{{ artifact.mainStatKey }}</td>
+                    <td>{{ artifact.level }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('main.delete_artifact', artifact_id=artifact.id) }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No artifacts available.</p>
+    {% endif %}{% endblock %}

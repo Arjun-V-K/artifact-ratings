@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Artifact{% endblock %}
+
+{% block content %}
+    <h2>Add Artifact JSON</h2>
+    <form method="POST" action="{{ url_for('main.add_artifact_json') }}" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <label for="json_file">Upload JSON File:</label>
+        <input type="file" id="json_file" name="json_file" accept=".json"><br>
+
+        <label for="json_data">Paste JSON Data:</label>
+        <textarea id="json_data" name="json_data" rows="5" cols="40"></textarea><br>
+
+        <button type="submit">Add Artifacts</button>
+    </form>{% endblock %}

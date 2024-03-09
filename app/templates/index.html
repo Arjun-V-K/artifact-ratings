@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/validation.js') }}"></script>
     <title>Artifact List</title>
 </head>
 <body>
@@ -26,6 +27,19 @@
         <input type="number" id="level" name="level" required><br>
         <button type="submit">Add Artifact</button>
     </form>
+    
+    <h1>Add Artifact JSON</h1>
+
+    <form method="POST" action="{{ url_for('main.add_artifact_json') }}" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <label for="json_file">Upload JSON File:</label>
+        <input type="file" id="json_file" name="json_file" accept=".json"><br>
+
+        <label for="json_data">Paste JSON Data:</label>
+        <textarea id="json_data" name="json_data" rows="5" cols="40"></textarea><br>
+
+        <button type="submit">Add Artifacts</button>
+    </form>
+
     {% if artifacts %}
     <table border="1">
         <thead>
