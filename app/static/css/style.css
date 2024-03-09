@@ -67,3 +67,21 @@ p {
     color: #777;
 }
 
+/* Custom styles for the entire card */
+.card.custom-card.custom-card-size {
+    background-color: rgb(84, 159, 233);
+    margin-bottom: 20px;
+    border: 1px solid rgb(222, 226, 230);
+}
+
+/* Custom styles for card title and text */
+.card.custom-card.custom-card-size .card-title,
+.card.custom-card.custom-card-size .card-text {
+    color: #ffffff; /* Set text color */
+}
+
+/* Custom styles for substats */
+.card.custom-card.custom-card-size .list-group-item {
+    background-color: rgb(240, 240, 240); /* Set background color for substats */
+    border: 1px solid rgb(200, 200, 200); /* Set border color for substats */
+}

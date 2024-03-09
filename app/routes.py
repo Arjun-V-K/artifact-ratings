@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from app.models import Artifact, db
+from app.models import Artifact, Substat, db
 
 import json
 
@@ -54,30 +54,28 @@ def add_artifact_json():
         mainStatKey = artifact.get('mainStatKey')
         level = artifact.get('level')
 
-        substats = artifact.get('substats', [])
-        subStatKeys = []
-        subStatValues = []
-        for i in range(4):
-            substat = substats[i] if i < len(substats) else None 
-            subStatKeys.append(substat.get('key') if substat else None)
-            subStatValues.append(substat.get('value') if substat else None)
-        
         new_artifact = Artifact(
-            setKey=setKey, 
-            slotKey=slotKey,
-            rarity=rarity,
-            mainStatKey=mainStatKey,
-            level=level,
-            subStatKey1 = subStatKeys[0],
-            subStatKey2 = subStatKeys[1],
-            subStatKey3 = subStatKeys[2],
-            subStatKey4 = subStatKeys[3],
-            subStatValue1 = subStatValues[0],
-            subStatValue2 = subStatValues[1],
-            subStatValue3 = subStatValues[2],
-            subStatValue4 = subStatValues[3]
+            set_key = artifact.get('setKey'),
+            slot_key = artifact.get('slotKey'),
+            level = artifact.get('level'),
+            rarity = artifact.get('rarity'),
+            main_stat_key = artifact.get('mainStatKey'),
+            location = artifact.get('location'),
+            lock = artifact.get('lock')
         )
+
+        substats_data = artifact.get('substats', [])
+        substats_list = []
+        for substat in substats_data:
+            new_substat = Substat(
+                key = substat.get('key'),
+                value = substat.get('value')
+            )
+            substats_list.append(new_substat)
+        
+        new_artifact.substats = substats_list
         db.session.add(new_artifact)
+        
     db.session.commit()
     return redirect(url_for('main.view_artifacts_page'))
 

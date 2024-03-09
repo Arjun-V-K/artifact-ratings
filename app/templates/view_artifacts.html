@@ -11,9 +11,11 @@
                 <th>ID</th>
                 <th>Set</th>
                 <th>Slot</th>
+                <th>Level</th>
                 <th>Rarity</th>
                 <th>Main Stat</th>
-                <th>Level</th>
+                <th>Location</th>
+                <th>Lock</th>
                 <th>Delete</th>
             </tr>
         </thead>
@@ -21,11 +23,13 @@
             {% for artifact in artifacts %}
                 <tr>
                     <td>{{ artifact.id }}</td>
-                    <td>{{ artifact.setKey }}</td>
-                    <td>{{ artifact.slotKey }}</td>
-                    <td>{{ artifact.rarity }}</td>
-                    <td>{{ artifact.mainStatKey }}</td>
+                    <td>{{ artifact.set_key }}</td>
+                    <td>{{ artifact.slot_key }}</td>
                     <td>{{ artifact.level }}</td>
+                    <td>{{ artifact.rarity }}</td>
+                    <td>{{ artifact.main_stat_key }}</td>
+                    <td>{{ artifact.location }}</td>
+                    <td>{{ artifact.lock}}</td>
                     <td>
                         <form method="POST" action="{{ url_for('main.delete_artifact', artifact_id=artifact.id) }}">
                             <button type="submit">Delete</button>
@@ -35,6 +39,43 @@
             {% endfor %}
         </tbody>
     </table>
+    <br>
+ 
+    <!-- Bootstrap Card Row -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+
+        {% for artifact in artifacts %}
+        <!-- Bootstrap Card Column -->
+        <div class="col mb-4">
+            <!-- Bootstrap Card -->
+            <div class="card custom-card custom-card-size">
+                <div class="card-body">
+                    <h5 class="card-title custom-card-text">{{ artifact.set_key }}</h5>
+                    <p class="card-text custom-card-text">Slot: {{ artifact.slot_key }}</p>
+                    <p class="card-text custom-card-text">Level: {{ artifact.level }}</p>
+                    <p class="card-text custom-card-text">Rarity: {{ artifact.rarity }}</p>
+                    <p class="card-text custom-card-text">Main Stat: {{ artifact.main_stat_key }}</p>
+                    <p class="card-text custom-card-text">Location: {{ artifact.location }}</p>
+                    <p class="card-text custom-card-text">Lock: {{ artifact.lock }}</p>
+                    
+                    <!-- Display Substats -->
+                    <ul class="list-group">
+                        {% for substat in artifact.substats %}
+                            <li class="list-group-item custom-card-text">Substat: {{ substat.key }} - Value: {{ substat.value }}</li>
+                        {% endfor %}
+                    </ul>
+                    
+                </div>
+            </div>
+            <!-- End Bootstrap Card -->
+        </div>
+        <!-- End Bootstrap Card Column -->
+        {% endfor %}
+
+    </div>
+    <!-- End Bootstrap Card Row -->
+
     {% else %}
         <p>No artifacts available.</p>
-    {% endif %}{% endblock %}
+    {% endif %}
+{% endblock %}
