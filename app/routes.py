@@ -5,24 +5,18 @@ import json
 
 main_bp = Blueprint('main', __name__)
 
-# @main_bp.route('/')
-# def index():
-#     artifacts = Artifact.query.all()
-#     return render_template('index.html', artifacts=artifacts)
-
 @main_bp.route('/')
 def welcome():
     return render_template('welcome.html')
 
-@main_bp.route('/view_artifacts')
-def view_artifacts():
+@main_bp.route('/view_artifacts_page')
+def view_artifacts_page():
     artifacts = Artifact.query.all()
     return render_template('view_artifacts.html', artifacts=artifacts)
 
-@main_bp.route('/add_artifact_page')
-def add_artifact_page():
+@main_bp.route('/add_artifacts_page')
+def add_artifacts_page():
     return render_template('add_artifacts.html')
-
 
 @main_bp.route('/add_artifact', methods=['POST'])
 def add_artifact():
@@ -41,7 +35,7 @@ def add_artifact():
     )
     db.session.add(new_artifact)
     db.session.commit()
-    return redirect(url_for('main.view_artifacts'))
+    return redirect(url_for('main.view_artifacts_page'))
 
 @main_bp.route('/add_artifact_json', methods=['POST'])
 def add_artifact_json():
@@ -85,12 +79,11 @@ def add_artifact_json():
         )
         db.session.add(new_artifact)
     db.session.commit()
-    return redirect(url_for('main.view_artifacts'))
-
+    return redirect(url_for('main.view_artifacts_page'))
 
 @main_bp.route('/delete_artifact/<int:artifact_id>', methods=['POST'])
 def delete_artifact(artifact_id):
     artifact_to_delete = Artifact.query.get(artifact_id)
     db.session.delete(artifact_to_delete)
     db.session.commit()
-    return redirect(url_for('main.view_artifacts'))
+    return redirect(url_for('main.view_artifacts_page'))
