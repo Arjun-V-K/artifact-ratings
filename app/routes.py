@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Artifact, Substat, db
 
+from .utils import format_artifact_substat_text, format_artifact_set_key
+
 import json
 
 main_bp = Blueprint('main', __name__)
@@ -12,7 +14,12 @@ def welcome():
 @main_bp.route('/view_artifacts_page')
 def view_artifacts_page():
     artifacts = Artifact.query.all()
-    return render_template('view_artifacts.html', artifacts=artifacts)
+    return render_template(
+        'view_artifacts.html', 
+        artifacts=artifacts, 
+        format_artifact_substat_text=format_artifact_substat_text, 
+        format_artifact_set_key=format_artifact_set_key
+    )
 
 @main_bp.route('/add_artifacts_page')
 def add_artifacts_page():
@@ -75,7 +82,7 @@ def add_artifact_json():
         
         new_artifact.substats = substats_list
         db.session.add(new_artifact)
-        
+
     db.session.commit()
     return redirect(url_for('main.view_artifacts_page'))
 

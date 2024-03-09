@@ -41,6 +41,13 @@
     </table>
     <br>
  
+    {% set artifact_slot_key_labels = {
+        "flower": "Flower of Life",
+        "plume": "Plume of Death",
+        "sands": "Sands of Eon",
+        "goblet": "Goblet of Eonothem",
+        "circlet": "Circlet of Logos"
+    } %}
     <!-- Bootstrap Card Row -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
 
@@ -50,8 +57,8 @@
             <!-- Bootstrap Card -->
             <div class="card custom-card custom-card-size">
                 <div class="card-body">
-                    <h5 class="card-title custom-card-text">{{ artifact.set_key }}</h5>
-                    <p class="card-text custom-card-text">Slot: {{ artifact.slot_key }}</p>
+                    <h5 class="card-title custom-card-text">{{ format_artifact_set_key(artifact.set_key) }}</h5>
+                    <p class="card-text custom-card-text">{{ artifact_slot_key_labels.get(artifact.slot_key) }}</p>
                     <p class="card-text custom-card-text">Level: {{ artifact.level }}</p>
                     <p class="card-text custom-card-text">Rarity: {{ artifact.rarity }}</p>
                     <p class="card-text custom-card-text">Main Stat: {{ artifact.main_stat_key }}</p>
@@ -61,7 +68,9 @@
                     <!-- Display Substats -->
                     <ul class="list-group">
                         {% for substat in artifact.substats %}
-                            <li class="list-group-item custom-card-text">Substat: {{ substat.key }} - Value: {{ substat.value }}</li>
+                            <li class="list-group-item custom-card-text">
+                                {{ format_artifact_substat_text(substat) }}
+                            </li>           
                         {% endfor %}
                     </ul>
                     
