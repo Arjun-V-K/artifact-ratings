@@ -85,3 +85,28 @@ p {
     background-color: rgb(240, 240, 240); /* Set background color for substats */
     border: 1px solid rgb(200, 200, 200); /* Set border color for substats */
 }
+
+.levelbox {
+    background-color: white;
+    color: black; /* Example: Change color of "HI" span */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 5px; /* Add padding */
+}
+
+.star {
+    color: gold;
+}
+
+.list-group-item {
+    font-size: small;
+}
+
+.artifact-card-top {
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+}
+
+.artifact-card-bottom{
+    padding: 20px;
+}

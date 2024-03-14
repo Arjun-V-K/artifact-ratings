@@ -61,38 +61,39 @@
         "circlet": "Circlet of Logos"
     } %}
     <!-- Bootstrap Card Row -->
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
         {% for artifact in artifacts %}
         <!-- Bootstrap Card Column -->
         <div class="col mb-4">
             <!-- Bootstrap Card -->
             <div class="card custom-card custom-card-size">
                 <div class="card-body">
-                    <h5 class="card-title custom-card-text">{{ format_artifact_set_key(artifact.set_key) }}</h5>
-                    <p class="card-text custom-card-text">{{ artifact_slot_key_labels.get(artifact.slot_key) }}</p>
-                    <p class="card-text custom-card-text">Level: {{ artifact.level }}</p>
-                    <p class="card-text custom-card-text">Rarity: {{ artifact.rarity }}</p>
-                    <p class="card-text custom-card-text">Main Stat: {{ artifact.main_stat_key }}</p>
-                    <p class="card-text custom-card-text">Location: {{ artifact.location }}</p>
-                    <p class="card-text custom-card-text">Lock: {{ artifact.lock }}</p>
-                    
-                    <!-- Display Substats -->
-                    <ul class="list-group">
-                        {% for substat in artifact.substats %}
-                            <li class="list-group-item custom-card-text">
-                                {{ format_artifact_substat_text(substat) }}
-                            </li>           
+                    <!-- Top section for artifact info with background image -->
+                    <div class="artifact-card-top" style="background-image: url('path_to_background_image.jpg');">
+                        <h5 class="card-title custom-card-text">{{ format_artifact_set_key(artifact.set_key) }}</h5>
+                        <p class="card-text custom-card-text">{{ artifact_slot_key_labels.get(artifact.slot_key) }}</p>
+                        {% for i in range(artifact.rarity) %}
+                            <span class="star">&#9733;</span>
                         {% endfor %}
-                    </ul>
-                    
+                        <p class="card-text custom-card-text" style="padding-top: 10px;">Main Stat: {{ artifact.main_stat_key }}</p>
+                    </div>
+                    <!-- Bottom section for substats without background image -->
+                    <div class="artifact-card-top-bottom">
+                        <!-- Display Substats -->
+                        <ul class="list-group">
+                            {% for substat in artifact.substats %}
+                                <li class="list-group-item custom-card-text">
+                                    {{ format_artifact_substat_text(substat) }}
+                                </li>           
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
             <!-- End Bootstrap Card -->
         </div>
         <!-- End Bootstrap Card Column -->
         {% endfor %}
-
     </div>
     <!-- End Bootstrap Card Row -->
 
