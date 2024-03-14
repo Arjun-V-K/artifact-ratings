@@ -92,3 +92,9 @@ def delete_artifact(artifact_id):
     db.session.delete(artifact_to_delete)
     db.session.commit()
     return redirect(url_for('main.view_artifacts_page'))
+
+@main_bp.route('/delete_all_artifacts', methods=['POST'])
+def delete_all_artifacts():
+    Artifact.query.delete()
+    db.session.commit()
+    return redirect(url_for('main.view_artifacts_page'))

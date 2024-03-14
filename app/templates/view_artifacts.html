@@ -4,8 +4,20 @@
 
 {% block content %}
     <h2>View Artifacts</h2>
+    <form id="delete-all-form" method="POST" action="{{ url_for('main.delete_all_artifacts') }}">
+        <button type="submit" onclick="confirmDeleteArtifacts()">Delete All Artifacts</button>
+    </form>
+
+    <script>
+        function confirmDeleteArtifacts() {
+            if (confirm("Are you sure you want to delete all artifacts?")) {
+                document.getElementById("delete-all-form").submit();
+            }
+        }
+    </script>
+    
     {% if artifacts %}
-    <table border="1">
+    <!-- <table border="1">
         <thead>
             <tr>
                 <th>ID</th>
@@ -38,7 +50,7 @@
                 </tr>
             {% endfor %}
         </tbody>
-    </table>
+    </table> -->
     <br>
  
     {% set artifact_slot_key_labels = {
