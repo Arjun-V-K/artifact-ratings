@@ -61,7 +61,7 @@
         "circlet": "Circlet of Logos"
     } %}
     <!-- Bootstrap Card Row -->
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
         {% for artifact in artifacts %}
         <!-- Bootstrap Card Column -->
         <div class="col mb-4">
@@ -82,9 +82,11 @@
                         <!-- Display Substats -->
                         <ul class="list-group">
                             {% for substat in artifact.substats %}
-                                <li class="list-group-item custom-card-text">
-                                    {{ format_artifact_substat_text(substat) }}
-                                </li>           
+                                <li class="list-group-item custom-card-text" style="display: flex; justify-content: space-between;">
+                                    <div style="flex-grow: 1;margin-right: 20px;">{{ format_artifact_substat_text(substat) }}</div>
+                                    <div>{{ calculate_each_roll(substat.roll_value) }}</div>
+                                    <div>{{ substat.roll_value }}%</div>
+                                </li>  
                             {% endfor %}
                         </ul>
                     </div>

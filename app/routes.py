@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Artifact, Substat, db
 
-from .utils import format_artifact_substat_text, format_artifact_set_key
+from .utils import format_artifact_substat_text, format_artifact_set_key, calculate_roll_value, calculate_each_roll
 
 import json
 
@@ -18,7 +18,8 @@ def view_artifacts_page():
         'view_artifacts.html', 
         artifacts=artifacts, 
         format_artifact_substat_text=format_artifact_substat_text, 
-        format_artifact_set_key=format_artifact_set_key
+        format_artifact_set_key=format_artifact_set_key,
+        calculate_each_roll = calculate_each_roll
     )
 
 @main_bp.route('/add_artifacts_page')
@@ -55,12 +56,25 @@ def add_artifact_json():
     # print(f"Received Data: {data} : {type(data)}")
     for artifact in data.get('artifacts'):
         # print(f"\n{artifact} : {type(artifact)}")
+
+        substats_data = artifact.get('substats', [])
+        substats_list = []
+        total_roll_value = 0
+        for substat in substats_data:
+            roll_value =  calculate_roll_value(substat.get('key'), substat.get('value'))
+            total_roll_value += roll_value
+            new_substat = Substat(
+                key = substat.get('key'),
+                value = substat.get('value'),
+                roll_value = roll_value
+            )
+            substats_list.append(new_substat)
+        
         setKey = artifact.get('setKey')
         slotKey = artifact.get('slotKey')
         rarity = artifact.get('rarity')
         mainStatKey = artifact.get('mainStatKey')
         level = artifact.get('level')
-
         new_artifact = Artifact(
             set_key = artifact.get('setKey'),
             slot_key = artifact.get('slotKey'),
@@ -68,18 +82,10 @@ def add_artifact_json():
             rarity = artifact.get('rarity'),
             main_stat_key = artifact.get('mainStatKey'),
             location = artifact.get('location'),
-            lock = artifact.get('lock')
+            lock = artifact.get('lock'),
+            roll_value = total_roll_value
         )
 
-        substats_data = artifact.get('substats', [])
-        substats_list = []
-        for substat in substats_data:
-            new_substat = Substat(
-                key = substat.get('key'),
-                value = substat.get('value')
-            )
-            substats_list.append(new_substat)
-        
         new_artifact.substats = substats_list
         db.session.add(new_artifact)
 

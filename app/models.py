@@ -10,6 +10,8 @@ class Artifact(db.Model):
     location = db.Column(db.String(50), nullable=False)
     lock = db.Column(db.Boolean, default=False)
 
+    roll_value = db.Column(db.Float, nullable=False)
+
     # Relationship with the Substat model
     substats = db.relationship('Substat', backref='artifact', lazy=True, cascade='all, delete-orphan')
 
@@ -17,6 +19,8 @@ class Substat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     key = db.Column(db.String(50), nullable=False)
     value = db.Column(db.Float, nullable=False)
+
+    roll_value = db.Column(db.Float, nullable=False)
     
     # Foreign key to relate each substat to an artifact
     artifact_id = db.Column(db.Integer, db.ForeignKey('artifact.id'), nullable=False)

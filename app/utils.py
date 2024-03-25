@@ -1,4 +1,5 @@
 import re
+import sys
 # Util functions
 
 # type StatKey
@@ -107,3 +108,43 @@ def format_artifact_set_key(camel_case_key):
 
     original_key = artifact_set_key_mapping.get(camel_case_key)
     return original_key if original_key else reverse_pascal_case(camel_case_key)
+
+def calculate_roll_value(substat_key, substat_value):
+    max_roll_value = {
+        "hp" : 298.75,
+        "hp_" : 5.83,
+        "atk" : 19.45,
+        "atk_" : 5.83,
+        "def" : 23.15,
+        "def_" : 7.29,
+        "eleMas" : 23.31,
+        "enerRech_" : 6.48,
+        "critRate_" : 3.89,
+        "critDMG_" : 7.77
+    }
+    return round(substat_value/max_roll_value[substat_key] * 100, -1)
+
+def calculate_each_roll(roll_value):
+    values = [100, 90, 80, 70]
+    out_list = []
+    def calc(target, out_list, i):
+        print(f"{target} : {i} : {out_list}")
+        if target == 0:
+            return True
+        if target < 0:
+            return False
+        if i > 3:
+            return False
+        
+        for i in range(4):
+            out_list.append(values[i])
+            if calc(target - values[i], out_list, i):
+                return True
+            out_list.pop()
+    
+    calc(roll_value, out_list, 0)
+    return out_list
+
+
+if __name__ == '__main__':
+    print(calculate_each_roll(float(sys.argv[1])))
