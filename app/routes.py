@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Artifact, Substat, db
 
-from .utils import format_artifact_substat_text, format_artifact_set_key, calculate_roll_value, calculate_each_roll
+from .utils import format_artifact_substat_text, format_artifact_set_key, calculate_roll_value, calculate_each_roll, min
 
 import json
 
@@ -19,7 +19,8 @@ def view_artifacts_page():
         artifacts=artifacts, 
         format_artifact_substat_text=format_artifact_substat_text, 
         format_artifact_set_key=format_artifact_set_key,
-        calculate_each_roll = calculate_each_roll
+        calculate_each_roll = calculate_each_roll,
+        min=min
     )
 
 @main_bp.route('/add_artifacts_page')

@@ -145,6 +145,8 @@ def calculate_each_roll(roll_value):
     calc(roll_value, out_list, 0)
     return out_list
 
+def min(a, b):
+    return a if a < b else b
 
 if __name__ == '__main__':
     print(calculate_each_roll(float(sys.argv[1])))
