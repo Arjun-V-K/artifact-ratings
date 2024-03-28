@@ -14,7 +14,8 @@ def create_app():
     # Set default config
     app.config.from_mapping(
         SECRET_KEY = 'dev',
-        SQLALCHEMY_DATABASE_URI = 'sqlite:///site.sqlite'
+        SQLALCHEMY_DATABASE_URI = 'sqlite:///site.sqlite',
+        SQLALCHEMY_TRACK_MODIFICATIONS = False
     )
 
     # Set config from instance config, if it exists
