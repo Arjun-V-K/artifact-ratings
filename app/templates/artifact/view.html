@@ -4,7 +4,7 @@
 
 {% block content %}
     <h2>View Artifacts</h2>
-    <form id="delete-all-form" method="POST" action="{{ url_for('main.delete_all_artifacts') }}">
+    <form id="delete-all-form" method="POST" action="{{ url_for('artifact.delete_all') }}">
         <button type="submit" onclick="confirmDeleteArtifacts()">Delete All Artifacts</button>
     </form>
 
@@ -43,7 +43,7 @@
                     <td>{{ artifact.location }}</td>
                     <td>{{ artifact.lock}}</td>
                     <td>
-                        <form method="POST" action="{{ url_for('main.delete_artifact', artifact_id=artifact.id) }}">
+                        <form method="POST" action="{{ url_for('artifact.delete', artifact_id=artifact.id) }}">
                             <button type="submit">Delete</button>
                         </form>
                     </td>
